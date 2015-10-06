@@ -1,5 +1,5 @@
 # Nodeploy
-Deploy continuous integration with GITLAB
+Continuous deployment  integration with GITLAB
 
 This project is using the node version 0.12.7 because some modules is still unstable in version 4.1.
 
