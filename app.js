@@ -5,9 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//Load Configurations with GIT LAB
+var config = require('./config');
+
 //Mongo Connection
 var mongo = require('mongoskin');
-var db = mongo.db("mongodb://localhost:27017/random_question", {native_parser:true});
+var db = mongo.db("mongodb://"+config.mongo_host+":27017/"+config.mongo_database, {native_parser:true});
 
 
 var routes = require('./routes/index');
@@ -21,7 +24,7 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(logger(config.logger_type));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -57,7 +60,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-if (app.get('env') === 'development') {
+if (app.get('env') === 'production') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
