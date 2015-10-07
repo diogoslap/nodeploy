@@ -13,13 +13,13 @@ var options = {
 /* GET Projects Owned listing. */
 router.get('/map/owned', function(req, res, next) {
 	var db = req.db;
-	options.path = url+'/owned?private_token='+config.git_private_key
-
+	options.path = url+'/owned?page=1&per_page='+config.max_projects_owned+'&private_token='+config.git_private_key
+	
 	http.get(options, function(rr) {
 		 var body = '';
 
 	    rr.on('data', function(chunk){
-	        body += chunk;
+	    	body += chunk;
 	    });
 
 	    rr.on('end', function(){
@@ -49,8 +49,8 @@ router.get('/map/owned', function(req, res, next) {
 /* GET Projects All listing. */
 router.get('/map/all', function(req, res, next) {
 	var db = req.db;
-	options.path = url+'?private_token='+config.git_private_key
-
+	options.path = url+'/all?page=1&per_page='+config.max_projects_all+'&private_token='+config.git_private_key;
+	
 	http.get(options, function(rr) {
 		 var body = '';
 

@@ -9,7 +9,7 @@ app.controller('MapController', function($scope,$http) {
       });
     };
 
-    $scope.mapAllProject = function(){
+    $scope.mapAllProjects = function(){
       $http.get("/projects/map/all").success(function(data) {
         listProjects();
       });
