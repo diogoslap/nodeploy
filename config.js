@@ -1,12 +1,12 @@
 var git_host = "yourhost-here";
-var git_private_key = "xxxx";
+var git_private_key = "XXXX";
 var mongo_database = "databasename";
 var mongo_host = "localhost";
 var user_ssh = "username";
 var user_public_key = "";
 var type_connection = "http";
-var max_projects_all = "50"; //Max projects is 50
-var max_projects_owned = "50"; //Max projects is 50
+var max_projects_all = "100"; 
+var max_projects_owned = "100"; 
 
 var logger_type = "tiny"; //dev, common, short, tiny, combined
 

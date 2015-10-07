@@ -17,6 +17,7 @@ app.controller('MapController', function($scope,$http) {
 
     $scope.mapOwnedProjects = function(){
       $http.get("/projects/map/owned").success(function(data) {
+        console.log(data);
         listProjects();
       });
     };

@@ -13,71 +13,95 @@ var options = {
 /* GET Projects Owned listing. */
 router.get('/map/owned', function(req, res, next) {
 	var db = req.db;
-	options.path = url+'/owned?page=1&per_page='+config.max_projects_owned+'&private_token='+config.git_private_key
-	
-	http.get(options, function(rr) {
-		 var body = '';
+	var finish = 1;
+	var pages = parseInt(config.max_projects_owned/50);
+	pages = (pages == 0)? 1 : pages;
+	for(var i =1; i <= pages; i++){
+		options.path = url+'/owned?page='+i+'&per_page=50&private_token='+config.git_private_key
+		
+		http.get(options, function(rr) {
+			 var body = '';
 
-	    rr.on('data', function(chunk){
-	    	body += chunk;
-	    });
+		    rr.on('data', function(chunk){
+		    	body += chunk;
+		    	
+		    });
 
-	    rr.on('end', function(){
-	        var jsonBody = JSON.parse(body);
-	        var jsonInsert = [];
-	        
-	        for(var key in jsonBody){
-	        	var jsonObject = new Object();
-	        	jsonObject.project_id = jsonBody[key].id;
-	        	jsonObject.name = jsonBody[key].name;
-	        	jsonObject.server = "";
-	        	jsonObject.command = "";
-	        	jsonInsert.push(jsonObject); 
-	        }
-	        db.collection('maps').insert(jsonInsert, {}, function(e, results){
-			    if (e) return next(e)		
-			    res.status(200).send("All owned projects are mapped");
-			});	       
-	    });
-	}).on('error', function(e){
-		res.status(500).send("Got an error: ", e)
-	});
-  
-  
+		    rr.on('end', function(){
+		    	if(body.length >0){   		
+			    	
+			        var jsonBody = JSON.parse(body);
+			        var jsonInsert = [];
+			        
+			        for(var key in jsonBody){
+			        	var jsonObject = new Object();
+			        	jsonObject.project_id = jsonBody[key].id;
+			        	jsonObject.name = jsonBody[key].name;
+			        	jsonObject.server = "";
+			        	jsonObject.command = "";
+			        	jsonInsert.push(jsonObject); 
+			        }
+			        db.collection('maps').insert(jsonInsert, {}, function(e, results){
+					    if (e) return next(e)	
+					    finish++;	
+					    if(finish == pages){
+					    	res.status(200).send("All owned projects are mapped");
+					    }
+					    
+					});	 
+				}      
+		    });
+		}).on('error', function(e){
+			res.status(500).send("Got an error: ", e)
+		});
+	}
 });
 
 /* GET Projects All listing. */
 router.get('/map/all', function(req, res, next) {
 	var db = req.db;
-	options.path = url+'/all?page=1&per_page='+config.max_projects_all+'&private_token='+config.git_private_key;
-	
-	http.get(options, function(rr) {
-		 var body = '';
+	var finish = 1;
+	var pages = parseInt(config.max_projects_all/50);
+	pages =(pages == 0)? 1 : pages;
+	for(var i =1; i <= pages; i++){
+		options.path = url+'/all?page='+i+'&per_page=50&private_token='+config.git_private_key
+		
+		http.get(options, function(rr) {
+			 var body = '';
 
-	    rr.on('data', function(chunk){
-	        body += chunk;
-	    });
+		    rr.on('data', function(chunk){
+		    	body += chunk;
+		    	
+		    });
 
-	    rr.on('end', function(){
-	        var jsonBody = JSON.parse(body);
-	        var jsonInsert = [];
-	        
-	        for(var key in jsonBody){
-	        	var jsonObject = new Object();
-	        	jsonObject.project_id = jsonBody[key].id;
-	        	jsonObject.name = jsonBody[key].name;
-	        	jsonObject.server = "";
-	        	jsonObject.command = "";
-	        	jsonInsert.push(jsonObject); 
-	        }
-	        db.collection('maps').insert(jsonInsert, {}, function(e, results){
-			    if (e) return next(e)		
-			    res.status(200).send("All projects are mapped");
-			});	       
-	    });
-	}).on('error', function(e){
-		res.status(500).send("Got an error: ", e)
-	});
+		    rr.on('end', function(){
+		    	if(body.length >0){   		
+			    	
+			        var jsonBody = JSON.parse(body);
+			        var jsonInsert = [];
+			        
+			        for(var key in jsonBody){
+			        	var jsonObject = new Object();
+			        	jsonObject.project_id = jsonBody[key].id;
+			        	jsonObject.name = jsonBody[key].name;
+			        	jsonObject.server = "";
+			        	jsonObject.command = "";
+			        	jsonInsert.push(jsonObject); 
+			        }
+			        db.collection('maps').insert(jsonInsert, {}, function(e, results){
+					    if (e) return next(e)	
+					    finish++;	
+					    if(finish == pages){
+					    	res.status(200).send("All projects are mapped");
+					    }
+					    
+					});	 
+				}      
+		    });
+		}).on('error', function(e){
+			res.status(500).send("Got an error: ", e)
+		});
+	}
   
   
 });
