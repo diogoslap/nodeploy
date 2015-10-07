@@ -13,7 +13,7 @@ var options = {
 /* GET Projects Owned listing. */
 router.get('/map/owned', function(req, res, next) {
 	var db = req.db;
-	var finish = 1;
+	var finish = 0;
 	var pages = parseInt(config.max_projects_owned/50);
 	pages = (pages == 0)? 1 : pages;
 	for(var i =1; i <= pages; i++){
@@ -60,7 +60,7 @@ router.get('/map/owned', function(req, res, next) {
 /* GET Projects All listing. */
 router.get('/map/all', function(req, res, next) {
 	var db = req.db;
-	var finish = 1;
+	var finish = 0;
 	var pages = parseInt(config.max_projects_all/50);
 	pages =(pages == 0)? 1 : pages;
 	for(var i =1; i <= pages; i++){
