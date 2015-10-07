@@ -26,7 +26,7 @@ If everything is installed, start the project
 
 To test your connection to get your owned projects, put in browser:
 
-http://localhost:5000/projects/map/owned
+http://localhost:5000/
 
 Questions?
 
