@@ -1,8 +1,39 @@
 body {
-  padding: 50px;
+   background-color:#102;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+.header{
+	margin-top: 1%;
+	height:100px;
+	width: 100%;
+}
+.container{
+	margin: 0 auto;
+	padding: 2%;
+	width: 100%;
+	min-height: 100%;	
+	overflow: hidden;
+	
+}
+.table{
+	margin-top: 1%;
+	background-color: #FFF;
+	color:#000;
+}
 a {
-  color: #00B7FF;
+  color: #EEE;
+}
+a:hover{
+	color:#EEE;
+	text-decoration: none;
+}
+.header a span{	
+	margin-left: 38%;
+	color: #EEE;
+	font-size: 60px;
+	
+}
+
+.form-group label{
+	color: #EEE;
 }

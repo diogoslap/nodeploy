@@ -3,12 +3,11 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(req.body);
-  res.render('index', { title: 'Express' });
+   res.render('index', { title: 'Nodeploy .::Continuous deploy::.' });
 });
 
 router.post('/', function(req, res, next) {
-  console.log(req.body);
-  res.render('index', { title: 'Express' });
+	console.log(req.body);
+  res.send("OK!");
 });
 module.exports = router;
