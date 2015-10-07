@@ -2,7 +2,11 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascripts/angular.min.js"></script>
+    <script type="text/javascript" src="/javascripts/main.js"></script>
   </head>
-  <body>
+  <body ng-app="nodeploy" ng-controller="MapController">
+  	<div class="header"><a href="/" alt="Home" title="Home"><span>Nodeploy</span></a></div>
+  	<div class="container">

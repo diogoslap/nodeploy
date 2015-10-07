@@ -1,5 +1,26 @@
 <%- include layout.ejs %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+	  <!-- Table -->
+	  <button class="btn" ng-click="mapOwnedProjects()">Map Projects</button>
+	  <!--<button class="btn" ng-click="mapAllProjects()">Map Projects</button>-->
+	  <table class="table table-bordered table-hover">
+	  	<thead>
+	        <tr >
+	            <th data-field="id">PROJECT ID</th>
+	            <th data-field="name">PROJECT NAME</th>
+	            <th data-field="price">PROJECT SERVER</th>
+	            <th data-field="price">PROJECT COMMAND</th>
+	            <th data-field="price">PROJECT OPTIONS</th>
+	        </tr>
+    	</thead>	
+	   	<tr ng-repeat="project in projects">
+		  <td >{{project.project_id}}</td>
+		  <td >{{project.name}}</td>
+		  <td >{{project.server}}</td>
+		  <td >{{project.command}}</td>
+		  <td ><a href="/projects/edit/{{project.project_id}}" class="btn btn-primary">Edit</a>
+		  	<button class="btn btn-danger" ng-click="deleteProject(project.project_id,project.name)">Delete</button></td>
+		</tr>
+	 </table>
+
  
 <%- include footer.ejs %>
