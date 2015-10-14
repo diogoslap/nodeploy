@@ -9,6 +9,8 @@
 	            <th data-field="name">PROJECT NAME</th>
 	            <th data-field="price">PROJECT SERVER</th>
 	            <th data-field="price">PROJECT COMMAND</th>
+	            <th data-field="price">PROJECT COMMAND TEST</th>
+	            <th data-field="price">PROJECT COMMAND ROLLBACK</th>
 	            <th data-field="price">PROJECT OPTIONS</th>
 	        </tr>
     	</thead>	
@@ -17,6 +19,8 @@
 		  <td >{{project.name}}</td>
 		  <td >{{project.server}}</td>
 		  <td >{{project.command}}</td>
+		  <td >{{project.command_test}}</td>
+		  <td >{{project.command_rollback}}</td>
 		  <td ><a href="/projects/edit/{{project.project_id}}" class="btn btn-primary">Edit</a>
 		  	<button class="btn btn-danger" ng-click="deleteProject(project.project_id,project.name)">Delete</button></td>
 		</tr>
