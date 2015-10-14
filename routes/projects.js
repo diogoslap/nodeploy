@@ -39,6 +39,8 @@ router.get('/map/owned', function(req, res, next) {
 			        	jsonObject.name = jsonBody[key].name;
 			        	jsonObject.server = "";
 			        	jsonObject.command = "";
+			        	jsonObject.command_test = "";
+			        	jsonObject.command_rollback = "";
 			        	jsonInsert.push(jsonObject); 
 			        }
 			        db.collection('maps').insert(jsonInsert, {}, function(e, results){
@@ -135,7 +137,8 @@ router.get('/edit/:id', function(req,res,next){
 router.post('/edit', function(req,res,next){
 	var db = req.db;		
 	  db.collection('maps').update({"project_id" :parseInt(req.body.id)},{$set:{"name":req.body.name,"server":req.body.server,
-	  	"command":req.body.command}}, function(e,result){
+	  	"command":req.body.command,"command_test":req.body.command_test,"command_rollback":req.body.command_rollback}},
+	  	 function(e,result){
 	  		if (e) return next(e)
 	  		res.redirect('/'); 
 	  });
