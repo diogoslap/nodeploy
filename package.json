@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "forever -o nodeploy.log -e error.log start ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -14,7 +14,6 @@
     "mongodb": "^1.4.39",
     "mongoskin": "^1.4.13",
     "morgan": "~1.6.1",
-    "node-slackr": "^0.1.1",
     "serve-favicon": "~2.3.0",
     "simple-ssh": "^0.8.6",
     "slack-notify": "^0.1.4"
