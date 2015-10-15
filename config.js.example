@@ -9,6 +9,9 @@ var user_password = "";
 var type_connection = "http";
 var max_projects_all = "100"; 
 var max_projects_owned = "100"; 
+var slack_hook_url = "https://<incoming-webhook>";
+var slack_channel = "#general";
+var slack_username = "webhookbot";
 
 var logger_type = "tiny"; //dev, common, short, tiny, combined
 
@@ -22,3 +25,6 @@ module.exports.type_connection = type_connection;
 module.exports.logger_type = logger_type;
 module.exports.max_projects_owned = max_projects_owned;
 module.exports.max_projects_all = max_projects_all;
+module.exports.slack_hook_url = slack_hook_url;
+module.exports.slack_channel = slack_channel;
+module.exports.slack_username = slack_username;

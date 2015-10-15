@@ -3,6 +3,17 @@ var router = express.Router();
 var sshObject = require("simple-ssh");
 var config = require('../config');
 var fs = require('fs');
+//var Slack =  require('node-slackr');
+var slack = "";
+if(config.slack_hook_url && config.slack_channel && config.slack_username){
+	/*slack = new Slack(config.slack_hook_url,{
+		  channel: config.slack_channel,
+		  username: config.slack_username,
+		  icon_emoji: ":joy:"
+	});*/
+	slack = require('slack-notify')(config.slack_hook_url);
+	
+}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -38,7 +49,14 @@ router.post('/', function(req, res, next) {
 				fs.appendFile('public/logs/'+req.body.project_id+'-error.txt',error, function(err){
 						if(err) console.log(err);
 				});		
-				console.log("Failed command, check log:public/logs/"+req.body.project_id+"-error.txt")		
+				console.log("Failed command, check log:public/logs/"+req.body.project_id+"-error.txt")
+				db.collection('maps').update({"project_id" :parseInt(req.body.project_id)},{$set:{"command_rollback":"Command Failed!"}},
+					function(e,result){
+						if(e) console.log(e)					 
+				});	
+				if(slack){
+					slackFunction(slack,'Command failed in the Project: '+result[0].name);
+				}	
 			},
 			exit: function(code){
 				if(result[0].command_test){
@@ -63,37 +81,14 @@ router.post('/', function(req, res, next) {
 							if(code == 1){
 								out = "Tests failed! check log:public/logs/"+req.body.project_id+"-test.txt";
 								console.log(out)
-								/*console.log("Executing rollback")
-								var command = result[0].command_rollback
-								var command_rollback = command.replace("@commit_count",total_commits)
-								console.log(command_rollback);
-								var dash = "\n========================"+new Date()+"====================\n";
-								fs.appendFile('public/logs/'+req.body.project_id+'-rollback.txt',dash, function(err){
-									if(err)	console.log(err);
-								});		
-								ssh.exec(command_rollback,{
-									out: function(outStd){
-										fs.appendFile('public/logs/'+req.body.project_id+'-rollback.txt',outStd, function(err){
-											if(err)	console.log(err);
-										});							
-									},
-									err: function(error){
-										fs.appendFile('public/logs/'+req.body.project_id+'-rollback.txt',error, function(err){
-											if(err)	console.log(err);											
-										});																												
-									},
-									exit:function(code){
-										if(code == 0){
-											out = "rollback Ok!"											
-										}else if(code ==1){
-											out = "Rollback Failed!"
-										}else if(code == 128){
-											out ="Rollback Fatal Error. Check Logs"
-										}
-										console.log(out)
-										console.log(code);
-									}								
-								})		*/											
+								db.collection('maps').update({"project_id" :parseInt(req.body.project_id)},{$set:{"command_rollback":"Tests Failed!"}},
+								  	 function(e,result){
+								  		if(e) console.log(e)								  		
+								  });
+
+								if(slack){									
+									slackFunction(slack,'Tests failed in the Project: '+result[0].name);											 
+								}																	
 							}else if(code == 0){
 								out = "Tests Ok!"
 								console.log(out)
@@ -102,7 +97,6 @@ router.post('/', function(req, res, next) {
 							fs.appendFile('public/logs/'+req.body.project_id+'-test.txt',out, function(err){
 								if(err)	console.log(err);
 							});	
-							console.log(code);
 							
 						}
 					})
@@ -114,4 +108,17 @@ router.post('/', function(req, res, next) {
 	});
  
 });
+
+slackFunction = function(slack,message){
+
+	slack.send({
+		channel: config.slack_channel,
+		text: message,									  
+		username: config.slack_username,
+		icon_emoji:':rage:'
+	});		
+	slack.onError = function (err) {
+		console.log('API error:', err);
+	};	
+}
 module.exports = router;
