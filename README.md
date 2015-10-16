@@ -7,7 +7,7 @@ I'll update as possible
 
 #Prerequisites
 * Nodejs 0.12.x
-* MongoDB
+* MongoDB 2.6
 * GitLab server
 
 
